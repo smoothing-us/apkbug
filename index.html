@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SYNC-XX</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+<style>
+:root {
+  --bg1: #000000;
+  --bg2: #0c0012;
+  --panel: rgba(15,0,25,0.95);
+  --accent1: #d84fe6;
+  --accent2: #a020f0;
+  --accent3: #ff66ff;
+  --text: #ffffff;
+  --muted: rgba(255,255,255,0.8);
+  --glass-border: rgba(216,79,230,0.5);
+  --divider: rgba(216,79,230,0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--text);
+  overflow: hidden;
+  background-color: var(--bg1);
+  position: relative;
+}
+
+/* Background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(216,79,230,0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(160,32,240,0.15) 0%, transparent 50%),
+    #000000;
+  z-index: 0;
+}
+
+/* Server Status */
+.server-status {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(25,0,35,0.9);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 2px solid var(--glass-border);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.9);
+  backdrop-filter: blur(25px);
+  z-index: 5;
+  font-weight: 700;
+}
+.server-status i { 
+  color: var(--accent1); 
+  font-size: 16px;
+}
+
+/* Main Container */
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 15px;
+  position: relative;
+  z-index: 3;
+}
+
+/* Main Card */
+.main-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 25px 20px;
+  border-radius: 18px;
+  background: var(--panel);
+  border: 2px solid var(--glass-border);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.95);
+  backdrop-filter: blur(30px);
+  animation: cardIn 0.7s ease-out forwards;
+}
+
+@keyframes cardIn { 
+  from {
+    opacity: 0; 
+    transform: translateY(15px) scale(0.98);
+  } 
+  to {
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+  } 
+}
+
+/* Header Section */
+.header-section {
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--divider);
+}
+
+.brand-logo {
+  width: 120px;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(216,79,230,0.7);
+  margin-bottom: 15px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.brand-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent1);
+  margin: 0 0 6px 0;
+  text-shadow: 0 0 20px rgba(216,79,230,0.8);
+  letter-spacing: 1.5px;
+}
+
+.brand-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+  font-weight: 600;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* User Info Section */
+.user-section {
+  background: rgba(30,0,40,0.8);
+  border: 2px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 25px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(216,79,230,0.4);
+}
+
+.user-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent1);
+  margin: 0 0 10px 0;
+  text-shadow: 0 0 15px rgba(216,79,230,0.7);
+}
+
+.user-role {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(100,0,150,0.9), rgba(160,0,220,0.9));
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  border: 2px solid rgba(216,79,230,0.6);
+  box-shadow: 0 0 20px rgba(216,79,230,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+
+.user-exp {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: 600;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 25px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent1);
+  margin: 0 0 12px 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  text-shadow: 0 0 12px rgba(216,79,230,0.6);
+}
+
+.section-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin: 0 0 15px 0;
+  font-weight: 600;
+}
+
+/* Input Group */
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px 16px 14px 45px;
+  border-radius: 10px;
+  border: 2px solid rgba(216,79,230,0.5);
+  background: rgba(25,0,35,0.9);
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Share Tech Mono', monospace;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(216,79,230,0.4);
+  backdrop-filter: blur(20px);
+  min-height: 50px;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--accent1);
+  box-shadow: 0 0 25px rgba(216,79,230,0.7);
+  background: rgba(35,0,45,0.95);
+}
+
+.input-field::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent1);
+  font-size: 18px;
+}
+
+/* Custom Select - DIALOG STYLE */
+.custom-select { 
+  position: relative; 
+  width: 100%; 
+  margin-bottom: 20px; 
+}
+
+.selected { 
+  background: rgba(30,0,40,0.9); 
+  border: 2px solid rgba(216,79,230,0.5); 
+  padding: 14px 16px; 
+  border-radius: 10px; 
+  color: var(--text); 
+  cursor: pointer; 
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-start;
+  gap: 10px; 
+  transition: all 0.3s ease; 
+  backdrop-filter: blur(20px);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(216,79,230,0.4);
+  min-height: 50px;
+}
+
+.selected:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 0 25px rgba(216,79,230,0.6);
+  border-color: var(--accent1);
+}
+
+.selected i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* DIALOG STYLE OPTIONS */
+.options-dialog {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-width: 350px;
+  background: rgba(20,0,30,0.98);
+  border: 2px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.95);
+  backdrop-filter: blur(30px);
+  z-index: 1000;
+  overflow: hidden;
+  animation: dialogIn 0.3s ease-out;
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.dialog-header {
+  background: rgba(216,79,230,0.1);
+  padding: 18px;
+  text-align: center;
+  border-bottom: 2px solid var(--divider);
+}
+
+.dialog-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent1);
+  margin: 0;
+  text-shadow: 0 0 12px rgba(216,79,230,0.6);
+}
+
+.dialog-options {
+  padding: 12px;
+}
+
+.option-item {
+  padding: 14px 16px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.2s ease;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border: 1px solid transparent;
+}
+
+.option-item:last-child {
+  margin-bottom: 0;
+}
+
+.option-item:hover {
+  background: rgba(216,79,230,0.15);
+  color: var(--accent1);
+  border-color: rgba(216,79,230,0.3);
+  transform: translateX(3px);
+}
+
+.option-item.active {
+  background: rgba(216,79,230,0.2);
+  color: var(--accent1);
+  border-color: var(--accent1);
+}
+
+.option-item i {
+  font-size: 16px;
+  width: 18px;
+  text-align: center;
+}
+
+.dialog-footer {
+  padding: 12px 16px;
+  text-align: center;
+  border-top: 2px solid var(--divider);
+}
+
+.close-dialog {
+  background: rgba(216,79,230,0.2);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 13px;
+}
+
+.close-dialog:hover {
+  background: rgba(216,79,230,0.3);
+  transform: translateY(-1px);
+}
+
+/* Overlay */
+.dialog-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+}
+
+/* Action Button */
+.action-section {
+  margin-top: 30px;
+}
+
+.action-button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 25px rgba(216,79,230,0.7);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 54px;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(216,79,230,0.9);
+  background: linear-gradient(135deg, var(--accent2), var(--accent1));
+}
+
+.action-button:active {
+  transform: translateY(-1px);
+}
+
+.action-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  background: linear-gradient(135deg, rgba(216,79,230,0.5), rgba(160,32,240,0.5));
+}
+
+/* Progress Bar */
+.progress-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(216,79,230,0.3);
+  border-radius: 3px;
+  margin-top: 15px;
+  overflow: hidden;
+  display: none;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 30px;
+  background: var(--panel);
+  color: var(--text);
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: 2px solid var(--glass-border);
+  box-shadow: 0 0 30px rgba(216,79,230,0.8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1001;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  max-width: 280px;
+  width: auto;
+  backdrop-filter: blur(30px);
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+/* Stats Panel */
+.stats-panel {
+  position: fixed;
+  top: 70px;
+  left: 15px;
+  background: rgba(25,0,35,0.9);
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid var(--glass-border);
+  backdrop-filter: blur(25px);
+  z-index: 3;
+  width: 150px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.9);
+}
+
+.stats-title {
+  font-size: 12px;
+  color: var(--accent1);
+  margin-bottom: 12px;
+  text-align: center;
+  border-bottom: 2px solid var(--divider);
+  padding-bottom: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 11px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.stat-value {
+  color: var(--accent1);
+  font-weight: 700;
+}
+
+/* Mobile Responsive */
+@media (max-width: 380px) {
+  .main-container {
+    padding: 15px 10px;
+  }
+  
+  .main-card {
+    padding: 20px 15px;
+    border-radius: 16px;
+  }
+  
+  .brand-logo {
+    width: 100px;
+  }
+  
+  .brand-title {
+    font-size: 22px;
+  }
+  
+  .user-name {
+    font-size: 16px;
+  }
+  
+  .stats-panel {
+    display: none;
+  }
+  
+  .server-status {
+    top: 15px;
+    right: 15px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  
+  .selected, .input-field {
+    padding: 12px 14px 12px 40px;
+    font-size: 13px;
+    min-height: 46px;
+  }
+  
+  .action-button {
+    padding: 14px;
+    font-size: 14px;
+    min-height: 50px;
+  }
+  
+  .options-dialog {
+    width: 90%;
+    max-width: 320px;
+  }
+  
+  .option-item {
+    padding: 12px 14px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  .brand-title {
+    font-size: 20px;
+  }
+  
+  .section-title {
+    font-size: 14px;
+  }
+  
+  .input-field, .selected {
+    font-size: 12px;
+  }
+  
+  .action-button {
+    font-size: 13px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .main-card {
+    max-width: 450px;
+    padding: 30px 25px;
+  }
+  
+  .brand-logo {
+    width: 140px;
+  }
+  
+  .brand-title {
+    font-size: 28px;
+  }
+  
+  .stats-panel {
+    left: 30px;
+    top: 90px;
+    width: 160px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="server-status">
+  <i class="ri-wifi-line"></i>
+  <span>SERVER ONLINE</span>
+</div>
+
+
+<div class="main-container">
+  <div class="main-card">
+    <!-- Header Section -->
+    <div class="header-section">
+      <img class="brand-logo" src="https://files.catbox.moe/fgikvd.jpg" alt="SYNC-XX">
+      <h1 class="brand-title">SYNC-XX</h1>
+      <p class="brand-subtitle">ADVANCED SECURITY PLATFORM</p>
+    </div>
+
+    <!-- User Info Section -->
+    <div class="user-section">
+      <div class="user-name" id="username">LOADING...</div>
+      <div class="user-role" id="role">ROLE: LOADING...</div>
+      <div class="user-exp" id="userExp">EXP: 2024-12-31</div>
+    </div>
+
+    <!-- Target Input Section -->
+    <div class="form-section">
+      <h2 class="section-title">TARGET NUMBER</h2>
+      <p class="section-subtitle">Masukkan nomor target di bawah</p>
+      
+      <div class="input-group">
+        <i class="ri-phone-line input-icon"></i>
+        <input type="text" class="input-field" id="targetNumber" placeholder="Contoh: 628123456789">
+      </div>
+    </div>
+
+    <!-- Bug Selection Section -->
+    <div class="form-section">
+      <h2 class="section-title">SELECT BUG</h2>
+      <p class="section-subtitle">Pilih jenis bug yang akan dikirim</p>
+      
+      <div class="custom-select">
+        <div class="selected" onclick="showDialog()">
+          <i class="ri-bug-line"></i>
+          <span>Forclose</span>
+          <span style="margin-left: auto;">▼</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Section -->
+    <div class="action-section">
+      <button class="action-button" id="sendBtn">
+        <i class="ri-send-plane-fill"></i> SEND BUG
+      </button>
+      
+      <div class="progress-container" id="progressBox">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dialog Select -->
+<div class="dialog-overlay" id="dialogOverlay"></div>
+<div class="options-dialog" id="optionsDialog">
+  <div class="dialog-header">
+    <h3 class="dialog-title">SELECT BUG TYPE</h3>
+  </div>
+  <div class="dialog-options">
+    <div class="option-item" onclick="selectOption('forclose')">
+      <i class="ri-shield-cross-line"></i> Forclose
+    </div>
+    <div class="option-item" onclick="selectOption('blank')">
+      <i class="ri-eye-off-line"></i> Blanking UI
+    </div>
+    <div class="option-item" onclick="selectOption('delay')">
+      <i class="ri-time-line"></i> Delay Invisible
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <button class="close-dialog" onclick="closeDialog()">CLOSE</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// Script tetap sama seperti sebelumnya
+const targetInput = document.getElementById("targetNumber");
+const toast = document.getElementById("toast");
+const progressBox = document.getElementById("progressBox");
+const progressBar = document.getElementById("progressBar");
+const sendBtn = document.getElementById("sendBtn");
+const dialogOverlay = document.getElementById("dialogOverlay");
+const optionsDialog = document.getElementById("optionsDialog");
+
+let selectedType = "forclose";
+let cooldownTimer;
+let isSending = false;
+
+// === LOAD DATA USER DARI LOGIN ===
+const userData = JSON.parse(localStorage.getItem("user") || "{}");
+
+// Dialog Functions
+function showDialog() {
+  dialogOverlay.style.display = "block";
+  optionsDialog.style.display = "block";
+  
+  // Highlight current selection
+  const options = document.querySelectorAll('.option-item');
+  options.forEach(option => {
+    option.classList.remove('active');
+    if (option.textContent.includes(capitalize(selectedType))) {
+      option.classList.add('active');
+    }
+  });
+}
+
+function closeDialog() {
+  dialogOverlay.style.display = "none";
+  optionsDialog.style.display = "none";
+}
+
+function selectOption(value) {
+  selectedType = value;
+  const selectedText = capitalize(value);
+  
+  // Update selected display dengan icon yang sesuai
+  const selectedElement = document.querySelector(".selected");
+  selectedElement.innerHTML = `
+    <i class="${getIconClass(value)}"></i>
+    <span>${selectedText}</span>
+    <span style="margin-left: auto;">▼</span>
+  `;
+  
+  // Show selection feedback
+  showToast(`✅ Selected: ${selectedText}`);
+  
+  // Close dialog
+  closeDialog();
+}
+
+function capitalize(str){ 
+  return str.charAt(0).toUpperCase() + str.slice(1); 
+}
+
+function getIconClass(type){
+  if(type === "forclose") return 'ri-shield-cross-line';
+  if(type === "blank") return 'ri-eye-off-line';
+  if(type === "delay") return 'ri-time-line';
+  return 'ri-bug-line';
+}
+
+// Toast
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2500);
+}
+
+// Send attack
+async function startAttack() {
+  if (isSending) return;
+  isSending = true;
+
+  const number = targetInput.value.trim();
+
+  // Validasi prefix + panjang minimal
+  if (
+    !number ||
+    (!number.startsWith("62") && !number.startsWith("60")) ||
+    number.length < 8
+  ) {
+    showToast("⚠️ Nomor target tidak valid");
+    isSending = false;
+    return;
+  }
+
+  if (isCooldown()) {
+    showToast("⏳ Tunggu cooldown selesai");
+    isSending = false;
+    return;
+  }
+
+  // ✅ Langsung mulai cooldown begitu tombol diklik
+  startCooldown();
+
+  // Disable button langsung untuk anti-spam
+  sendBtn.disabled = true;
+  sendBtn.style.opacity = "0.6";
+  sendBtn.style.cursor = "not-allowed";
+
+  progressBox.style.display = "block";
+  progressBar.style.width = "0%";
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += 10;
+    progressBar.style.width = progress + "%";
+    if (progress >= 100) clearInterval(interval);
+  }, 200);
+
+  try {
+    const res = await fetch(`/api/bug/${selectedType}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ number })
+    });
+    const data = await res.json();
+    progressBar.style.width = "100%";
+
+    if (res.ok) {
+      showToast("✅ Send success (" + selectedType + ")");
+    } else {
+      showToast("❌ " + (data?.error || "Gagal"));
+      sendBtn.disabled = false;
+      sendBtn.style.opacity = "1";
+      sendBtn.style.cursor = "pointer";
+    }
+  } catch (err) {
+    progressBar.style.width = "100%";
+    showToast("❌ Error: " + err.message);
+    sendBtn.disabled = false;
+    sendBtn.style.opacity = "1";
+    sendBtn.style.cursor = "pointer";
+  }
+
+  isSending = false;
+}
+
+// Cooldown system
+function startCooldown() {
+  const cooldownDuration = 15 * 60 * 1000;
+  const cooldownEnd = Date.now() + cooldownDuration;
+  localStorage.setItem("cooldownEnd", cooldownEnd);
+  updateCooldownDisplay();
+}
+
+function isCooldown() {
+  const cooldownEnd = localStorage.getItem("cooldownEnd");
+  return cooldownEnd && Date.now() < cooldownEnd;
+}
+
+function updateCooldownDisplay() {
+  const cooldownEnd = localStorage.getItem("cooldownEnd");
+  if (!cooldownEnd) return;
+
+  clearInterval(cooldownTimer);
+
+  cooldownTimer = setInterval(() => {
+    const now = Date.now();
+    const remaining = cooldownEnd - now;
+    if (remaining <= 0) {
+      clearInterval(cooldownTimer);
+      sendBtn.disabled = false;
+      sendBtn.style.opacity = "1";
+      sendBtn.style.cursor = "pointer";
+      sendBtn.innerHTML = '<i class="ri-send-plane-fill"></i> SEND BUG';
+      localStorage.removeItem("cooldownEnd");
+      return;
+    }
+
+    const minutes = Math.floor(remaining / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+    sendBtn.innerHTML = `Cooldown ${minutes}:${seconds.toString().padStart(2,"0")}`;
+  }, 1000);
+}
+
+function checkCooldown() {
+  if (isCooldown()) {
+    sendBtn.disabled = true;
+    sendBtn.style.opacity = "0.6";
+    sendBtn.style.cursor = "not-allowed";
+    updateCooldownDisplay();
+  }
+}
+
+// Event listeners
+sendBtn.addEventListener("click", startAttack);
+
+// Prevent Enter key double trigger
+targetInput.addEventListener("keydown", e => { 
+  if (e.key === "Enter") {
+    e.preventDefault();
+    startAttack();
+  }
+});
+
+// Close dialog when clicking overlay
+dialogOverlay.addEventListener('click', closeDialog);
+
+// Check cooldown on page load  
+window.addEventListener("load", checkCooldown);  
+
+// 🔒 Cek status login / akun terhapus
+
+// === SISTEM ROLE OTOMATIS ===
+window.addEventListener("load", () => {
+  if (!userData.username) {
+    alert("Kamu belum login!");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const nameEl = document.getElementById("username");
+  const roleEl = document.getElementById("role");
+
+  // Set nama
+  nameEl.textContent = userData.username;
+
+  // Tentukan role otomatis
+  let role = "VIP";
+  const username = userData.username.toLowerCase();
+
+  if (username === "smooth") role = "Developer";
+  else if (
+    username === "ciuhigh" || 
+    username === "dravex" || 
+    username === "kenoyyy" || 
+    username === "lucifer" || 
+    username === "kaffzz" ||
+    username === "qinzzaja" ||
+    username === "frazz" ||
+    username === "c" ||
+    username === "d" ||
+    username === "e" ||
+    username === "f" ||
+    username === "g"
+  ) role = "Owner";
+  else if (
+    username === "h" ||
+    username === "i" ||
+    username === "j" ||
+    username === "k" ||
+    username === "l" ||
+    username === "m" ||
+    username === "n"
+  ) role = "High Owner";
+  else if (
+    username === "tatzz" ||
+    username === "p" ||
+    username === "q" ||
+    username === "r" ||
+    username === "s" ||
+    username === "t" ||
+    username === "u"
+  ) role = "Moderator";
+  else if (
+    username === "nizar" ||
+    username === "p" ||
+    username === "q" ||
+    username === "r" ||
+    username === "s" ||
+    username === "t" ||
+    username === "u"
+  ) role = "Reseller";
+
+  // Tampilkan role
+  roleEl.textContent = `ROLE: ${role}`;
+
+  // Update teks sambutan
+  const sub = document.querySelector(".brand-subtitle");
+  if (sub)
+    sub.innerHTML = `Welcome to <b style="color:#d84fe6">SYNC-XX</b>`;
+});
+
+// Simulasi data dashboard
+let count = 0;
+setInterval(() => {
+  count += Math.floor(Math.random() * 3);
+  document.getElementById("bugCount").textContent = count;
+  document.getElementById("activeUsers").textContent = 12 + Math.floor(Math.random() * 5);
+}, 4000);
+
+// Cooldown status update
+function updateCooldown() {
+  const cooldownEnd = localStorage.getItem("cooldownEnd");
+  const cd = document.getElementById("cooldownStat");
+  if (!cd) return;
+  if (!cooldownEnd) {
+    cd.textContent = "None";
+    return;
+  }
+  const remaining = cooldownEnd - Date.now();
+  if (remaining <= 0) {
+    cd.textContent = "None";
+    localStorage.removeItem("cooldownEnd");
+    return;
+  }
+  const m = Math.floor(remaining / 60000);
+  const s = Math.floor((remaining % 60000) / 1000);
+  cd.textContent = `${m}:${s.toString().padStart(2, "0")}`;
+}
+setInterval(updateCooldown, 1000);
+updateCooldown();
+</script>
+</body>
+</html>
